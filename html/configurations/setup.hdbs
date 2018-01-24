@@ -1,0 +1,107 @@
+<!-- $Id: setup.html baskar.govindan Exp$-->
+<!--
+  -- ADManager Plus inital configuration page.
+  -- Step 1 - Download ADManager Plus
+  -- Step 2 - Server URL
+  -- Step 3 - Admin/Technician Credentials
+  -->
+<div id="admpServerSetup">
+	<div class="status-container">
+		<div class="error accord" style="display:none;">
+				<p class="f-left"><span></span></p>
+				<div class="f-right close-icon comm-icon" onclick="hideStatusMsg(this)"></div>
+		</div>
+		<div class="success accord" style="display:none;">
+			<p class="f-left"><span></span></p>
+			<div class="f-right close-icon comm-icon" onclick="hideStatusMsg(this)"></div>
+		</div>
+	</div>
+	<div class="server_config">
+		<div class="config_content">
+			<div id="setup_download" class="config_content_sub_div">
+				<div class="config_header">Download and install ADManager Plus to use this app</div>
+				<div class="config_sub_header">If you have already installed ADManager Plus, Click `Integrate Now` to continue.</div>
+				<div style="margin-top: 20px;">
+					<div class="admp-download-box" onClick="downloadADManager()">
+						<i class="comm-icon download-icon"></i>
+						<span style="margin-left:5px;">Download Trial Version<span>
+					</div>
+					<input type="button" value="Integrate Now" class="btn-green" onClick=showNext()>
+				</div>
+			</div>
+			<div id="setup_server_url" class="config_content_sub_div" style="display:none;">
+				<div class="config_header">Enter ADManager Plus Server URL</div>
+				<div style="margin-top:20px;">
+					<div class="admp-form-group">
+						<div class="admp-input-box">
+							<input type="text" class="admp-textinput" onblur="showNext(2)" id="admanagerServerUrl" placeholder="Ex: https://admanagerplus:8080"> 
+						</div>
+					</div>
+					<div id="loadingDiv" class="loadingDiv" style="margin-top:0px;">
+						<img class="loading_icon" src="../../images/loading-icon.gif">
+						<span class="connecting_msg">Connecting...</span>
+					</div>
+				</div>
+				<div class="errorMsg">
+				Cannot connect to ADManager Plus. Possible reasons could be no network connection, wrong server name or port number.
+				</div>
+			</div>
+			<div id="setup_admin_credentials" class="config_content_sub_div" style="display:none;">
+				<div class="config_header">ADManager Plus Admin Credentials</div>
+				<div style="margin-top:20px;">
+					<div class="admp-form-group">
+						<label class="admp-control-label">
+							User Name
+						</label>
+						<div class="admp-input-box">
+							<input type="text" id="admanagerUserName" class="admp-textinput" placeholder="">
+						</div>
+						<div class="admp-credentials-error" id="username">
+							<label></label>
+						</div>
+					</div>
+					<div class="admp-form-group">
+						<label class="admp-control-label">
+							Password
+						</label>
+						<div class="admp-input-box">
+							<input type="password" id="admanagerPassword" class="admp-textinput" placeholder="">
+						</div>
+						<div class="admp-credentials-error" id="password">
+							<label><label>
+						</div>
+					</div>
+					<div class="admp-form-group">
+							<label class="admp-control-label">
+								Domain Name
+							</label>
+							<div class="admp-dropdown-container">
+								<label> Selected Domain</label>
+								<div class="admp-inputgroup-addon" id="domainSelBtn">
+									<i class="comm-icon admp-dropicon"></i>
+								</div>
+								<div class="admp-dropdown-box" id="loginDomainList" style="display: none;"></div>
+							</div>
+					</div>
+				</div>
+				
+			</div>
+			<div class="config_content_sub_div" style="height:7%;">
+				<img id="credetial_loading" style="margin-top:100px;;margin-left:30%;width:50px;height:50px;display:none;" src="../../images/loading-icon.gif">
+			</div>
+		</div>
+		<div class="config_nav">
+			<hr>
+			<div class="admp-steps" style="display:none;">
+				<span class="steps-text">Step <span id="currentLevel">1</span> of 3</span>
+				<input id="btn-previous" type="button" value="Previous" class="btn-gray" onClick=showPrevious()>
+				<input id="btn-next" type="button" value="Next" class="btn-green" onClick=showNext()>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$('.admp-dropdown-box ul li a').click(function() {updateDomainName(this);});
+	$("#admanagerServerUrl").focus(function(){$(".errorMsg").hide();});
+	$('#admanagerPassword, #admanagerUserName').focus(function(){$(".admp-credentials-error").hide();});
+</script>

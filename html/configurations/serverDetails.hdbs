@@ -1,0 +1,559 @@
+<!-- $Id: serverDetails.html baskar.govindan Exp$-->
+<!--
+  -- ADManager Plus Server Details and configuration page.
+  -->
+<div id="admpServerDetails">
+	<div class="status-container"><!-- Status Container ---->
+		<div class="error accord" style="display:none;"><!-- Error Msg Div ---->
+				<p class="f-left"><span></span></p>
+				<div class="f-right close-icon comm-icon" onclick="hideStatusMsg(this)"></div>
+		</div>
+		<div class="success accord" style="display:none;"><!-- Success Msg Div ---->
+			<p class="f-left"><span></span></p>
+			<div class="f-right close-icon comm-icon" onclick="hideStatusMsg(this)"></div>
+		</div>
+	</div>
+	<div class="server_details"><!-- Server URL and Connection Status ---->
+		<div id="server_url" class="server-details-subdiv">
+			<div class="serverDetailsHeader">
+				<span>Server Details</span>
+			</div>
+			<div style="margin-left:50px;">
+				<div class="admp-server-details-group">
+						<label class="admp-server-details-label">
+							Server URL
+						</label>
+						<div class="admp-server-details-value" id="serverUrlValue">
+							
+						</div>
+						<div class="admp-server-details-value" id="edit" style="display:none;">
+							<i class="comm-icon admp-edit-icon"></i>
+							<label class="pointer bluecolor" onclick="modifyServerDetails()">Edit</label>
+						</div>
+				</div>
+				<div class="admp-server-details-group">
+					<label class="admp-server-details-label">
+						Status
+					</label>
+					<div class="admp-server-details-value" id="serverStatDiv">
+						<div class="f-left green-tick-icon comm-icon"></div><span style="margin-left:10px;" id="serverStatus">Connected</span>
+					</div>
+					<div class="admp-server-details-value" id="serverStat_loading" style="display:none;">
+						<div><img class="loading_icon" src="../../images/loading-icon.gif"></div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<div id="server_url_config" class="server-details-subdiv" style="display:none;"><!-- Modify Server URL ---->
+			<div class="serverDetailsHeader">
+				<span>Server Details</span>
+			</div>
+			<div style="margin-left:50px;">
+				<div class="admp-form-group" id="server-form-group">
+					<label class="admp-control-label">
+						Server URL
+					</label>
+					<div class="admp-input-box">
+						<input type="text" id="serverURL" class="admp-textinput" placeholder="">
+					</div>
+				</div>
+				<div class="errorMsg admp-admin-error" style="display:none;">
+					Cannot connect to ADManager Plus. Possible reasons could be no network connection, wrong server name or port number.
+				</div>
+				<div id="loadingDiv" class="loadingDiv" style="margin-top:0px;">
+						<img class="loading_icon" src="../../images/loading-icon.gif">
+						<span class="connecting_msg">Connecting...</span>
+				</div>
+				<div class="admp-server-details-mgmt-buttons">
+					<input type="button" value="Update" class="btn-green admp-update-button" onClick=updateServerURL()>
+					<input type="button" value="Cancel" class="btn-gray admp-update-button" onClick=modifyServerCancel()>
+				</div>
+			</div>
+		</div>
+		<div id="admin_credentials" class="server-details-subdiv"><!-- Authenticated User details and Auth Status ---->
+			<div class="serverDetailsHeader">
+				<span>Admin Credentials</span>
+			</div>
+			<div style="margin-left:50px;">
+				<div class="admp-server-details-group">
+						<label class="admp-server-details-label">
+							User Name
+						</label>
+						<div class="admp-server-details-value" id="userNameValue">
+							
+						</div>
+						<div class="admp-server-details-value" id="edit" style="display:none;">
+							<i class="comm-icon admp-edit-icon"></i>
+							<label class="bluecolor pointer"  onclick="modifyAdminCredentials()">Edit</label>
+						</div>
+				</div>
+				<div class="admp-server-details-group">
+						<label class="admp-server-details-label">
+							Domain
+						</label>
+						<div class="admp-server-details-value" id="domainValue">
+							
+						</div>
+				</div>
+				<div class="admp-server-details-group">
+						<label class="admp-server-details-label">
+							Status
+						</label>
+						<div class="admp-server-details-value" id="authStatDiv" >
+							<div class="f-left green-tick-icon comm-icon"></div><span style="margin-left:10px;" id="loginStatus">Valid</span>
+						</div>
+						<div class="admp-server-details-value" id="authStat_loading" style="display:none;">
+							<div><img class="loading_icon" src="../../images/loading-icon.gif"></div>
+						</div>
+				</div>
+			</div>	
+		</div>
+		<div id="admin_credentials_config" class="server-details-subdiv" style="display:none;"><!-- Admin/Techinician login ---->
+			<div class="serverDetailsHeader">
+				<span>Admin Credentials</span>
+			</div>
+			<div id="credentials" style="margin-left:50px;">
+					<div class="admp-form-group">
+						<label class="admp-control-label">
+							User Name
+						</label>
+						<div class="admp-input-box">
+							<input type="text" id="admanagerUserName" class="admp-textinput" placeholder="">
+						</div>
+						<div class="admp-credentials-error" id="username">
+							<label></label>
+						</div>
+					</div>
+					<div class="admp-form-group">
+						<label class="admp-control-label">
+							Password
+						</label>
+						<div class="admp-input-box">
+							<input type="password" id="admanagerPassword" class="admp-textinput" placeholder="">
+						</div>
+						<div class="admp-credentials-error" id="password">
+							<label><label>
+						</div>
+					</div>
+					
+					<div class="admp-form-group">
+							<label class="admp-control-label">
+								Domain
+							</label>
+							<div class="admp-dropdown-container">
+								<label> Select Domain</label>
+								<div class="admp-inputgroup-addon" id="domainSelBtn">
+									<i class="comm-icon admp-dropicon"></i>
+								</div>
+								<div class="admp-dropdown-box" id="domainList" style="display: none;"></div>
+							</div>
+					</div>
+					<div class="admp-server-details-mgmt-buttons">
+						<input type="button" value="Update" class="btn-green admp-update-button" onClick=updateAdminCredentials()>
+						<input type="button" value="Cancel" class="btn-gray admp-update-button" onClick=modifyServerCancel()>
+					</div>
+			</div>
+			<div id="credetial_loading" style="display:none;">
+				<img style="position:absolute;left:0;right:0;margin-top:-130px;margin-left:22%;width:50px;height:51px;" src="../../images/loading-icon.gif">
+			</div>
+		</div>
+	</div>
+</div>
+<div id="admp-modal"></div><!-- Confirm and Alert Message Box -- will be loaded dynamically ---->								
+
+<script>
+		$("#serverURL").focus(function(){$(".errorMsg").hide();$("#server-form-group").find(".admp-input-box").removeClass('errorTextbox');});
+		$("#serverURL").on('keyup', function (e) {if (e.keyCode == 13) {if(this.value != ''){updateServerURL();}}});
+		$('#admanagerPassword, #admanagerUserName').focus(function(){$(".admp-credentials-error").hide();});
+
+		var client = ZAFClient.init();
+		var admanagerServerURL = '';
+		var oldServerURL = '';
+		var userName = '';
+		var domainName = '';
+		var authtoken = '';	
+		var status = '';
+		var loginDomainList = '';
+		var oldLoginDomainList = '';
+		client.metadata().then(function(metadata) {
+			admanagerServerURL = metadata.settings.admanagerServerUrl;
+			userName = metadata.settings.admanagerUserName;
+			domainName = metadata.settings.admanagerDomainName;
+			authtoken = metadata.settings.admanagerAuthToken;
+			loginDomainList = metadata.settings.admanagerLoginDomainList;
+			if(admanagerServerURL)
+			{
+				$("#serverUrlValue").html(admanagerServerURL);
+				$("#userNameValue").html(userName);
+				$("#domainValue").html(domainName);
+				checkServerConnection();
+			}
+			else
+			{
+				admanagerServerURL = $("#serverUrlValue").html();
+				$(".server-details-subdiv#server_url").hover(function(){$(this).find(".admp-server-details-value#edit").show();}, function() {$(this).find(".admp-server-details-value#edit").hide();});
+				$(".server-details-subdiv#admin_credentials").hover(function(){$(this).find(".admp-server-details-value#edit").show();}, function() {$(this).find(".admp-server-details-value#edit").hide();});
+			}
+						
+			var serverConn = {
+				url: admanagerServerURL+'/MobileAPI/MobileLogin?methodToCall=domainList',
+				type: 'POST',
+				cors: true,
+			};
+			client.request(serverConn).then(function(data) {
+				data = ADManagerErrorHandler.handle(data);
+				if(data.isSuccess)
+				{
+					var loginDomainList = data.response;
+					if(loginDomainList != null)
+					{	
+						var domainName = '';
+						var html = '<ul>';
+						for(key in loginDomainList)
+						{
+							html += '<li><a onclick="updateDomainName(this);">'+loginDomainList[key]+'</a></li>';
+							if(domainName == '')
+								domainName = loginDomainList[key];
+						}
+						html += '</ul>';
+						$("#domainList").html(html);
+						$("#domainList").closest(".admp-dropdown-container").find("label").text(domainName);
+					}
+				}
+			});
+			
+		});
+		/*
+		 * To check the server status
+		 */
+		function checkServerConnection()
+		{	
+			$("#serverStatDiv").hide();
+			$("#serverStat_loading").show();
+		
+			var serverConn = {
+				url: admanagerServerURL+'/MobileAPI/MobileLogin?methodToCall=domainList',
+				type: 'POST',
+				cors: true,
+			};
+			
+			client.request(serverConn).then(function(data) {
+				data = ADManagerErrorHandler.handle(data);
+				if(data.isSuccess)
+				{
+					$("#serverStatus").text("Connected");
+					$("#serverStatus").prev().addClass('green-tick-icon');
+					$("#serverStatus").prev().removeClass('red-cross-icon');
+					$("#openADMPIframe").show();
+					checkAuth();
+				}
+				else
+				{
+					$("#serverStatus").text("Unable to connect");
+					$("#serverStatus").prev().addClass('red-cross-icon');
+					$("#serverStatus").prev().removeClass('green-tick-icon');
+					$("#admin_credentials").fadeTo(300, 0.5);
+					$("#loginStatus").text("Invalid");
+					$("#loginStatus").prev().addClass('red-cross-icon');
+					$("#loginStatus").prev().removeClass('green-tick-icon');
+					$("#openADMPIframe").hide();
+				}
+				$("#serverStatDiv").show();
+				$("#serverStat_loading").hide();
+			}).catch(function(error) {
+				$("#serverStatus").text("Unable to connect");
+				$("#serverStatus").prev().addClass('red-cross-icon');
+				$("#serverStatus").prev().removeClass('green-tick-icon');
+				$("#serverStatDiv").show();
+				$("#serverStat_loading").hide();
+				$("#openADMPIframe").hide();
+				$("#admin_credentials").fadeTo(300, 0.5);
+				$("#loginStatus").text("Invalid");
+				$("#loginStatus").prev().addClass('red-cross-icon');
+				$("#loginStatus").prev().removeClass('green-tick-icon');
+			});			
+			$(".server-details-subdiv#server_url").hover(function(){$(this).find(".admp-server-details-value#edit").show();}, function() {$(this).find(".admp-server-details-value#edit").hide();});
+		}
+		/*
+		 * To check the authtoken validity
+		 */
+		function checkAuth()
+		{
+			$("#authStatDiv").hide();
+			$("#authStat_loading").show();
+			var authConnection = {
+				url: admanagerServerURL+'/RestAPI/GetAuthInfo?AuthToken='+authtoken,
+				type: 'POST',
+				cors: true,
+			};
+			client.request(authConnection).then(function(data) {
+				data = ADManagerErrorHandler.handle(data);
+				if(data.isSuccess)
+				{
+					$("#loginStatus").text("Valid");
+					$("#loginStatus").prev().addClass('green-tick-icon');
+					$("#loginStatus").prev().removeClass('red-cross-icon');
+				}
+				else
+				{
+					$("#loginStatus").text("Invalid");
+					$("#loginStatus").prev().addClass('red-cross-icon');
+					$("#loginStatus").prev().removeClass('green-tick-icon');
+				}
+				$("#authStatDiv").show();
+				$("#authStat_loading").hide();
+			}).catch(function(error) {
+				$("#loginStatus").text("Invalid");
+				$("#loginStatus").prev().addClass('red-cross-icon');
+				$("#loginStatus").prev().removeClass('green-tick-icon');
+				$("#authStatDiv").show();
+				$("#authStat_loading").hide();
+			});		
+			$(".server-details-subdiv#admin_credentials").hover(function(){$(this).find(".admp-server-details-value#edit").show();}, function() {$(this).find(".admp-server-details-value#edit").hide();});
+		}
+		/*
+		 * show server url modification section
+		 */
+		function modifyServerDetails()
+		{
+			$("#server_url").hide();
+			$("#admin_credentials").show();
+			$("#server_url_config").show();
+			$("#admin_credentials_config").hide();
+		}
+		/*
+		 * show Login section
+		 */
+		function modifyAdminCredentials()
+		{
+			$("#server_url").show();
+			$("#admin_credentials").hide();
+			$("#server_url_config").hide();
+			$("#admin_credentials_config").show();
+		}
+		/*
+		 * ADManager API call to check the entered URL
+		 */
+		function updateServerURL()
+		{
+			var serverUrl = $("#serverURL").val();
+			if(isValidURL(serverUrl))
+			{
+				var callback = function()
+				{
+					$("#loadingDiv").show();
+					$("#server-form-group").hide();
+					$("#admin_credentials").fadeTo(300, 0.5);
+					disableMgmtBtns();
+					var serverConn = {
+						url: serverUrl+'/MobileAPI/MobileLogin?methodToCall=domainList',
+						type: 'POST',
+						cors: true,
+					};
+					client.request(serverConn).then(function(data) {
+						data = ADManagerErrorHandler.handle(data);
+						if(data.isSuccess)
+						{
+							admanagerServerURL = serverUrl;
+							loginDomainList = JSON.stringify(data.response);
+							
+							$("#serverUrlValue").html(admanagerServerURL);
+							
+							var settings = {
+								"admanagerServerUrl" : serverUrl,
+								"admanagerLoginDomainList" : JSON.stringify(data.response),
+							}
+							ADManagerCommonUtil.updateSettings(settings);
+							
+							$("#setup_admin_credentials").closest(".admp-input-box").removeClass('errorTextbox');							
+							
+							var domainName = '';
+							var html = '<ul>';
+							for(key in data.response)
+							{
+								html += '<li><a onclick="updateDomainName(this);">'+data.response[key]+'</a></li>';
+								if(domainName == '')
+									domainName = data.response[key];
+							}
+							html += '</ul>';
+							$("#domainList").html(html);
+							$("#domainList").closest(".admp-dropdown-container").find("label").text(domainName);
+							
+							$("#server_url").show();
+							$("#admin_credentials").fadeTo(300, 1);
+							$("#admin_credentials").hide();
+							$("#server_url_config").hide();
+							$("#admin_credentials_config").show();
+							$("#serverStatus").text("Connected");
+							$("#serverStatus").prev().removeClass('red-cross-icon');
+							$("#serverStatus").prev().addClass('green-tick-icon');
+							$("#openADMPIframe").show();
+							status = "IN PROGRESS";
+						}
+						else
+						{	
+							$("#server-form-group").find(".admp-input-box").addClass('errorTextbox');
+							$("div.errorMsg").text(data.response);
+							$(".errorMsg").show();
+							$("#admin_credentials").fadeTo(300, 1);
+						}
+						$("#loadingDiv").hide();
+						$("#server-form-group").show();
+						enableMgmtBtns();
+					}).catch(function(error) {
+						$("#loadingDiv").hide();
+						$("#server-form-group").show();
+						$("#server-form-group").find(".admp-input-box").addClass('errorTextbox');
+						$("div.errorMsg").text('Cannot connect to ADManager Plus. Possible reasons could be no network connection, wrong server name or port number.');
+						$(".errorMsg").show();
+						enableMgmtBtns();
+					});			
+				}
+				ADManagerCommonUtil.popup('Alert', 'Changing server url will also change the settings of admin credentials. Do you wish to continue?', callback);
+			}
+		}
+
+		function modifyServerCancel()
+		{
+			$("#server_url").show();
+			$("#admin_credentials").show();
+			$("#server_url_config").hide();
+			$("#admin_credentials_config").hide();
+			$("#loadingDiv").hide();
+			$(".errorMsg").hide();
+			$("#server-form-group").show();
+			$("#serverURL").val('');
+			$("#server-form-group").find(".admp-input-box").removeClass('errorTextbox');
+			enableMgmtBtns();
+			if(status !='' && status != 'COMPLETED') //Need to check the given credentials works with new server url if cancel action done after updating server url.
+			{
+				checkAuth();
+				status = 'COMPLETED';
+			}
+			
+		}
+		var timeout;
+		function updateAdminCredentials()
+		{
+			if(admanagerServerURL == null)
+			{
+				client.metadata().then(function(metadata) {
+					admanagerServerURL = metadata.settings.admanagerServerUrl;
+					updateAdminCredentials();
+				});
+				return;
+			}
+			var newUserName = $("#admanagerUserName").val();
+			var password = $("#admanagerPassword").val();
+			var selectedDomain = $(".admp-dropdown-container").find("label").text();
+				
+			if(newUserName == '')
+			{
+				$(".admp-credentials-error#username").find("label").text('Username cannot be empty !');
+				$(".admp-credentials-error#username").show();
+			}
+			else if(password == '')
+			{
+				$(".admp-credentials-error#password").find("label").text('Password cannot be empty !');
+				$(".admp-credentials-error#password").show();
+			}
+			else
+			{
+				$("#credentials").fadeTo(300, 0.5);
+				$("#server_url").fadeTo(300, 0.5);
+				$("#credetial_loading").show();
+				disableMgmtBtns();
+				clearTimeout(timeout);
+				var adminConn = {
+					url: admanagerServerURL+'/RestAPI/APIAuthToken?loginName='+newUserName+'&password='+password+'&domainName='+selectedDomain+'&PRODUCT_NAME=Zendesk',
+					type: 'POST',
+					cors: true,
+				};
+				client.request(adminConn).then(function(data) {
+					data = ADManagerErrorHandler.handle(data);
+					if(data.isSuccess)
+					{
+						var authObject = JSON.parse(data.response.AdmpAuthObject);
+						var settings = {
+							"admanagerUserName" : newUserName,
+							"admanagerDomainName" : selectedDomain,
+							"admanagerAuthToken" : data.response.AuthTicket,
+							"admanagerDomainList" : JSON.stringify(authObject.domainNameList),
+						}
+						
+						ADManagerCommonUtil.updateSettings(settings);
+						
+						userName = newUserName;
+						domainName = selectedDomain;
+						authtoken = data.response.AuthTicket;
+						
+						$(".success.accord").hide();
+						$(".error.accord").hide();
+						$(".success.accord").find("p").empty().append('<span></span>   Login Successful.');
+						$(".success.accord").slideDown();								
+						timeout = setTimeout(function(){
+							$(".success.accord").slideUp();
+						},2000); 
+						
+						$("#admin_credentials").show();
+						$("#server_url_config").hide();
+						$("#admin_credentials_config").hide();
+						$("#loginStatus").text("Valid");
+						$("#loginStatus").prev().removeClass('red-cross-icon');
+						$("#loginStatus").prev().addClass('green-tick-icon');
+						
+						$("#userNameValue").html(userName);
+						$("#domainValue").html(selectedDomain);
+					}
+					else
+					{	
+						$(".success.accord").hide();
+						$(".error.accord").hide();
+						$(".error.accord").find("p").empty().append('<span></span>'+data.response);
+						$(".error.accord").slideDown();								
+						timeout = setTimeout(function(){$(".error.accord").slideUp()},5000); 
+						enableMgmtBtns();
+						//$("#serverUrlValue").html(admanagerServerURL);
+					}
+					$("#credentials").fadeTo(300, 1);
+					$("#server_url").fadeTo(300, 1);
+					$("#credetial_loading").hide();
+					enableMgmtBtns();
+				}).catch(function(error) {
+					$(".error.accord").find("p").empty().append('<span></span> Cannot connect to ADManager Plus. Possible reasons could be no network connection, wrong server name or port number.');
+					$(".error.accord").slideDown();								
+					timeout = setTimeout(function(){$(".error.accord").slideUp()},5000); 
+					enableMgmtBtns();
+					$("#credentials").fadeTo(300, 1);
+					$("#server_url").fadeTo(300, 1);
+					$("#credetial_loading").hide();
+				});			
+			}
+		}
+		
+		function disableMgmtBtns(){
+			$(".btn-gray").prop('disabled', true);
+			$(".btn-green").prop('disabled', true);
+			$(".btn-gray").fadeTo(300, 0.5);
+			$(".btn-green").fadeTo(300, 0.5);
+		}
+		
+		function enableMgmtBtns(){
+			$(".btn-gray").prop('disabled', false);
+			$(".btn-green").prop('disabled', false);
+			$(".btn-gray").fadeTo(300, 1);
+			$(".btn-green").fadeTo(300, 1);
+		}
+		/*
+		 * Opens ADManager Plusapp in an iframe
+		 */
+		function openADMPIframe()
+		{
+			$("#openADMPIframe").addClass("active");
+			$("#setUpPage").removeClass("active");
+			$("#admanager_view_container").html("<iframe src='"+admanagerServerURL+"' style=\"height:100%;width:100%;\"></iframe>"); 
+			$("#dashboard_view_container").hide(); 
+			$("#admanager_view_container").show(); 
+		}
+		
+</script>

@@ -1,0 +1,45 @@
+<html>
+<head>
+	<link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/2/zendesk_garden.css" type="text/css">
+  
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../../js/ADManagerCommonUtil.js"></script>
+    <script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+	<link rel="stylesheet" href="../../styles/ADManagerStyle.css" type="text/css">
+</head>
+<body onpageshow="test()">
+	 <div class="topBarPos" id="topBarPos">
+     <table><tbody><tr><td id="topBarImg"></td><td id="topBarContent"><span style="color:#3EB1C2;cursor:pointer;font-family:arial;" id="openADManagerPlusInIframe" onclick="openADManagerPlus();">Jump to ADManager Plus</span></td></tr></tbody></table>
+     
+    </div>
+    <div id="loadingImg" style="margin-top: 110px;margin-left: 130px;display:none"><img src="../../images/loading-icon.gif" width="25px" height="25px"></div>
+
+	<script>
+		var client = ZAFClient.init();
+		client.invoke('popover', {
+		  width: 300, 
+		  height: 200
+		});
+		var admanagerServerURL = '';
+		client.metadata().then(function(metadata) {
+			admanagerServerURL = metadata.settings.admanagerServerUrl;
+		});	
+		
+		function openADManagerPlus(){
+            $('#loadingImg').show();
+			if(!admanagerServerURL || admanagerServerURL == '')
+			{
+				$('#loadingImg').hide();
+				client.invoke('popover', {width: 520, height: 200});
+				$('#topBarPos').css('width','450px');
+				$('#topBarPos').css('left','10%'); 
+				$('#topBarContent').html('<span style="color:#ff0000;font-family:sans-serif;font-size:12px;">ADManager Plus is not configured. Please contact Zendesk Administrator.</span>');
+				return;
+			}
+			$('#loadingImg').hide();
+			window.open(admanagerServerURL, "_blank");
+		}
+	</script>
+</body>
+</html>
