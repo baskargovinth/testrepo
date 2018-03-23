@@ -39,7 +39,6 @@ function showNext()
 					$("#admanagerServerUrl").closest(".admp-input-box").hide();
 					$(".errorMsg").hide();
 					disableNavBar();
-					var client = ZAFClient.init();
 					var authConn = {
 						url: serverUrl+'/MobileAPI/MobileLogin?methodToCall=domainList',
 						type: 'POST',
@@ -111,7 +110,6 @@ function showNext()
 					$("#credetial_loading").show();
 					disableNavBar();
 					serverUrl = $("#admanagerServerUrl").val();
-					var client = ZAFClient.init();
 					var authConn = {
 						url: serverUrl+'/RestAPI/APIAuthToken?loginName='+userName+'&password='+password+'&domainName='+selectedDomain+'&PRODUCT_NAME=Zendesk',
 						type: 'POST',
