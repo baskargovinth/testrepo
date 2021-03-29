@@ -1,5 +1,5 @@
-<!-- $Id: ADManagerUserMgmtScripts.js baskar.govindan Exp$-->
-
+// <!-- $Id: ADManagerUserMgmtScripts.js baskar.govindan Exp$-->
+//ignorei18n_start
 /*
  * These are the common scripts used all over the mgmt actions ---
  * Enable User
@@ -439,3 +439,4 @@
 		addtionalData.reqId = ticket_id;
 		return JSON.stringify(addtionalData);
 	}
+//ignorei18n_end

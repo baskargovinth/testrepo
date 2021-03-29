@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="hide-scroll">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
+        <script src="../../js/admp-utils.js"></script>
+        <script src="../../js/associate-users-modal.js"></script>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/@zendeskgarden/css-bedrock,npm/@zendeskgarden/css-buttons,npm/@zendeskgarden/css-forms,npm/@zendeskgarden/css-utilities" type="text/css">
+        <link rel="stylesheet" href="https://webfonts.zoho.com/css?family=Open+Sans:300,400,600,700,800" >
+        <link rel="stylesheet" href="../../styles/admp-styles.css" type="text/css">
+    </head>
+    <body>
+        <div class="overlay"><img class="loading-gif" src="../../images/admp-loading.gif"/></div>
+        <div class="modal-header">
+			<h4>Associate Users</h4>
+		</div>
+        <div id="admp_associate_modal_status_message"></div>
+		<div class="modal-content">
+            <div class="modal-form-group">
+                <label for="admp_technician" class="modal-control-label">
+                    Select ADManager Technician
+                </label>
+                <div class="custom-select width-360 custom-admp-technician">
+                    <select id="admp_technician" onchange="admpTechSelectChangeEvent();"></select>
+                </div>
+            </div>
+            <div class="modal-form-group" >
+                <div id="admp_technician_roles" class="admp-associate-roles">
+                    Associated Roles :
+                    <span id="admp_technician_role_name"></span>
+                    <span class="popup-container">
+                        <a>More Details</a>
+                        <div class="popup">
+                            <table class="popup-table-head">
+                                <colgroup>
+                                    <col style="width:47.5%">
+                                    <col style="width:52.5%">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <td>ROLE NAME</td>
+                                        <td>DOMAIN NAME</td>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class="scroll-bar">
+                                <table class="popup-table">
+                                    <colgroup>
+                                        <col style="width:47.5%">
+                                        <col style="width:52.5%">
+                                    </colgroup>
+                                    <tbody class="load-role">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-form-group">
+                <label for="zendesk_user" class="modal-control-label">
+                    Select Zendesk User
+                </label>
+                <div class="custom-select width-360 custom-zendesk-user">
+                    <select id="zendesk_user"></select>
+                </div>
+            </div>
+            <div class="modal-form-group">
+                <label for="admp_authtoken" class="modal-control-label">
+                    Enter Authtoken
+                </label> 
+                <input type="text" class="modal-input-box" autocomplete="off" id="admp_authtoken"/>
+            </div>
+            <div class="modal-form-group">
+                <a class="admp-help" target="_blank" href="https://www.manageengine.com/products/ad-manager/help/help-desk-delegation/authtoken-management-in-admanager-plus.html?utm_source=zendesk">
+                    <i class="icn-help fd-sprite"></i>
+                    Help
+                </a>
+            </div>
+		</div>
+		<div class="modal-footer">
+			<div class="modal-buttons">
+                <button id="associate_modal_save" class="c-btn c-btn--primary" onclick="saveUserAssociationDetails();">Save</button>
+                <button id="associate_modal_close" class="c-btn" onclick="closeAssociateUserModal()">Close</button>
+			</div>
+		</div>
+    </body>
+</html>

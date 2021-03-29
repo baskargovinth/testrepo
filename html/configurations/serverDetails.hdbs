@@ -166,6 +166,7 @@
 		$("#serverURL").on('keyup', function (e) {if (e.keyCode == 13) {if(this.value != ''){updateServerURL();}}});
 		$('#admanagerPassword, #admanagerUserName').focus(function(){$(".admp-credentials-error").hide();});
 
+		var client = ZAFClient.init();
 		var admanagerServerURL = '';
 		var oldServerURL = '';
 		var userName = '';

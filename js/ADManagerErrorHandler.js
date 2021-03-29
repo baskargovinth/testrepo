@@ -1,11 +1,10 @@
-<!-- $Id: ADManagerErrorHandler.js baskar.govindan Exp$-->
-
-var ADManagerErrorHandler = function(){
+// <!-- $Id: ADManagerErrorHandler.js baskar.govindan Exp$-->
+//ignorei18n_start
+var ADManagerErrorHandler = function() {
 	//TODO
 }
 
-ADManagerErrorHandler.handle = function(data)
-{
+ADManagerErrorHandler.handle = function(data) {
 	var resultJSON = {};
 	resultJSON.isSuccess = false;
 	if(data != null && data !='')
@@ -24,7 +23,7 @@ ADManagerErrorHandler.handle = function(data)
 			var status = data[0].status;
 			if(status == 'SEVERE')
 			{
-				resultJSON.response = data[0].statusMessage;
+				resultJSON.response = data[0].statusMessage.replace(/&amp;/g, "&");
 			}
 			else
 			{
@@ -40,15 +39,17 @@ ADManagerErrorHandler.handle = function(data)
 	}
 	else
 	{		
-		resultJSON.response = 'Cannot connect to ADManager Plus. Possible reasons could be no network connection, wrong server name or port number';
+		resultJSON.response = 'Cannot connect to ADManager Plus. Possible reasons could be no network connection or stopping ADManager Plus service.';
 	}
 	return resultJSON;
 }
 
-ADManagerErrorHandler.getStatusMessage = function(errorCode)
-{
-	if(errorCode == '00000003')
+ADManagerErrorHandler.getStatusMessage = function(errorCode) {
+	if(errorCode == '00000003') {
 		return 'Product to Product Authentication Failure';
-	else
+	}
+	else {
 		return 'Can\'t Process the Request';
+	}	
 }
+//ignorei18n_end

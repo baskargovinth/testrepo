@@ -1,11 +1,21 @@
-<!-- $Id: ADManagerCommonUtil.js baskar.govindan Exp$-->
+//ignorei18n_start
+// <!-- $Id: ADManagerCommonUtil.js baskar.govindan Exp$-->
 
 var ADManagerCommonUtil = function(){
 	var config_status = '';
 }
 
+ADManagerCommonUtil.getSettings = function()
+{
+	var client = ZAFClient.init();
+	client.metadata().then(function(metadata) {
+		return metadata.settings;
+	});
+}
+
 ADManagerCommonUtil.updateSettings =  function(settings)
 {
+	var client = ZAFClient.init();
 	
 	client.metadata().then(function(metadata) {
 		var updateSettings = {
@@ -85,3 +95,4 @@ ADManagerCommonUtil.getParamValuesByName = function(querystring) {
     }
   }
 }
+//ignorei18n_end

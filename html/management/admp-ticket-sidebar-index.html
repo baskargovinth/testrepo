@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>ADManager Plus</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/@zendeskgarden/css-bedrock,npm/@zendeskgarden/css-buttons,npm/@zendeskgarden/css-forms,npm/@zendeskgarden/css-utilities,npm/@zendeskgarden/css-modals" type="text/css">
+		<link rel="stylesheet" href="https://webfonts.zoho.com/css?family=Open+Sans:300,400,600,700,800" >
+		<link rel="stylesheet" href="../../styles/admp-styles.css" type="text/css">
+		<!-- <link rel="stylesheet" href="../../styles/ADManagerStyle.css" type="text/css"> -->
+
+		<script src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
+		<script src="../../js/admp-utils.js"></script>
+		<script src="../../js/admp-ticket-sidebar-index.js"></script>
+	</head>
+	<body>
+		<div class="overlay"><img class="loading-gif" src="../../images/admp-loading.gif"/></div>
+		<div id="admp_sidebar_buttons">
+			<div class="mgmt-icon-div">
+				<img class="mgmt-icon" src="../../images/CreateUser.png">
+				<span class="bluecolor pointer" onclick="openModal('1');">Create User</span>
+			</div>
+			<div class="mgmt-icon-div">
+				<img class="mgmt-icon" src="../../images/DeleteUser.png">
+				<span class="bluecolor pointer" onclick="openModal('2');">Delete User</span>
+			</div>
+			<div class="mgmt-icon-div">
+				<img class="mgmt-icon" src="../../images/DisableUser.png">
+				<span class="bluecolor pointer" onclick="openModal('3');">Disable User</span>
+			</div>
+			<div class="mgmt-icon-div">
+				<img class="mgmt-icon" src="../../images/EnableUser.png">
+				<span class="bluecolor pointer" onclick="openModal('4');">Enable User</span>
+			</div>
+			<div class="mgmt-icon-div">
+				<img class="mgmt-icon" src="../../images/ResetUser.png">
+				<span class="bluecolor pointer" onclick="openModal('5');">Reset User Password</span>
+			</div>
+			<div class="mgmt-icon-div">
+				<img class="mgmt-icon" src="../../images/UnlockUser.png">
+				<span class="bluecolor pointer" onclick="openModal('6');">Unlock User</span>
+			</div>
+		</div>
+        <div id="admp_sidebar_message">
+		</div>
+	</body>
+</html>

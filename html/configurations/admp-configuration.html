@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="../../js/admp-configuration.js"></script>
+        <script src="../../js/ADManagerErrorHandler.js"></script>
+    </head>
+    <body>
+		<div id="admpServerDetails">
+			<div class="overlay-config"></div>
+			<div class="status-container"><!-- Status Container ---->
+				<div class="error accord" style="display:none;"><!-- Error Msg Div ---->
+						<p class="f-left"><span></span></p>
+						<div class="f-right close-icon comm-icon" onclick="hideStatusMsg(this)"></div>
+				</div>
+				<div class="success accord" style="display:none;"><!-- Success Msg Div ---->
+					<p class="f-left"><span></span></p>
+					<div class="f-right close-icon comm-icon" onclick="hideStatusMsg(this)"></div>
+				</div>
+			</div>
+			<div class="server_details"><!-- Server URL and Connection Status ---->
+				<div id="server_url" class="server-details-subdiv">
+					<div class="serverDetailsHeader">
+						<span>Server Details</span>
+					</div>
+					<div style="margin-left:50px;">
+						<div class="admp-server-details-group">
+							<label class="admp-server-details-label">
+								Server URL
+							</label>
+							<div class="admp-server-details-value" id="serverUrlValue">
+								
+							</div>
+							<div class="admp-server-details-value" id="edit" style="display:none;">
+								<i class="comm-icon admp-edit-icon"></i>
+								<label class="pointer bluecolor" onclick="modifyServerDetails()">Edit</label>
+							</div>
+						</div>
+						<div class="admp-server-details-group">
+							<label class="admp-server-details-label">
+								Status
+							</label>
+							<div class="admp-server-details-value" id="serverStatDiv">
+								<div class="f-left green-tick-icon comm-icon"></div><span style="margin-left:10px;" id="serverStatus">Connection Established</span>
+							</div>
+							<div class="admp-server-details-value" id="serverStat_loading" style="display:none;">
+								<div><img class="loading_icon" src="../../images/loading-icon.gif"></div>
+							</div>
+						</div>
+					</div>	
+				</div>
+				<div id="server_url_config" class="server-details-subdiv" style="display:none;"><!-- Modify Server URL ---->
+					<div class="serverDetailsHeader">
+						<span>Server Details</span>
+					</div>
+					<div style="margin-left:50px;">
+						<div class="admp-form-group" id="server-form-group">
+							<label class="admp-control-label">
+								Server URL
+							</label>
+							<div class="admp-input-box">
+								<input type="text" id="serverURL" onkeyup="enterKeyEventListenersConfig(event);" class="admp-textinput" placeholder="">
+							</div>
+						</div>
+						<div class="errorMsg admp-admin-error" style="display:none;">
+							Cannot connect to ADManager Plus. Possible reasons could be no network connection, wrong server name or port number.
+						</div>
+						<div id="loadingDiv" class="loadingDiv" style="margin-top:0px;">
+								<img class="loading_icon" src="../../images/loading-icon.gif">
+								<span class="connecting_msg">Connecting...</span>
+						</div>
+						<div class="admp-server-details-mgmt-buttons">
+							<input type="button" value="Update" class="btn-green admp-update-button" onClick=updateServerURL()>
+							<input type="button" value="Cancel" class="btn-gray admp-update-button" onClick=modifyServerCancel()>
+						</div>
+					</div>
+				</div>
+				<div id="admin_credentials" class="server-details-subdiv"><!-- Authenticated User details and Auth Status ---->
+					<div class="serverDetailsHeader">
+						<span>Admin Credentials</span>
+					</div>
+					<div style="margin-left:50px;">
+						<div class="admp-server-details-group">
+								<label class="admp-server-details-label">
+									User Name
+								</label>
+								<div class="admp-server-details-value" id="userNameValue">
+									
+								</div>
+								<div class="admp-server-details-value" id="edit" style="display:none;">
+									<i class="comm-icon admp-edit-icon"></i>
+									<label class="bluecolor pointer"  onclick="modifyAdminCredentials()">Edit</label>
+								</div>
+						</div>
+						<div class="admp-server-details-group">
+								<label class="admp-server-details-label">
+									Domain
+								</label>
+								<div class="admp-server-details-value" id="domainValue">
+									
+								</div>
+						</div>
+						<div class="admp-server-details-group">
+								<label class="admp-server-details-label">
+									Status
+								</label>
+								<div class="admp-server-details-value" id="authStatDiv" >
+									<div class="f-left green-tick-icon comm-icon"></div><span style="margin-left:10px;" id="loginStatus">Valid Credentials</span>
+								</div>
+								<div class="admp-server-details-value" id="authStat_loading" style="display:none;">
+									<div><img class="loading_icon" src="../../images/loading-icon.gif"></div>
+								</div>
+						</div>
+					</div>	
+				</div>
+				<div id="admin_credentials_config" class="server-details-subdiv" style="display:none;"><!-- Admin/Techinician login ---->
+					<div class="serverDetailsHeader">
+						<span>Admin Credentials</span>
+					</div>
+					<div id="credentials" style="margin-left:50px;">
+							<div class="admp-form-group">
+								<label class="admp-control-label">
+									User Name
+								</label>
+								<div class="admp-input-box">
+									<input type="text" id="admanagerUserName" onkeyup="enterKeyEventListenersConfig(event);" class="admp-textinput" placeholder="">
+								</div>
+								<div class="admp-credentials-error" id="username">
+									<label></label>
+								</div>
+							</div>
+							<div class="admp-form-group">
+								<label class="admp-control-label">
+									Password
+								</label>
+								<div class="admp-input-box">
+									<input type="password" id="admanagerPassword" onkeyup="enterKeyEventListenersConfig(event);" class="admp-textinput" placeholder="">
+								</div>
+								<div class="admp-credentials-error" id="password">
+									<label><label>
+								</div>
+							</div>
+							
+							<div class="admp-form-group">
+									<label class="admp-control-label">
+										Domain
+									</label>
+									<div class="admp-dropdown-container">
+										<label> Select Domain</label>
+										<div class="admp-inputgroup-addon" id="domainSelBtn">
+											<i class="comm-icon admp-dropicon"></i>
+										</div>
+										<div class="admp-dropdown-box" id="domainList" style="display: none;"></div>
+									</div>
+							</div>
+							<div class="admp-server-details-mgmt-buttons">
+								<input type="button" value="Update" class="btn-green admp-update-button" onClick=updateAdminCredentials()>
+								<input type="button" value="Cancel" class="btn-gray admp-update-button" onClick=modifyAdminCredCancel()>
+							</div>
+					</div>
+					<div id="credetial_loading" style="display:none;">
+						<img style="position:absolute;left:0;right:0;margin-top:-130px;margin-left:22%;width:50px;height:51px;" src="../../images/loading-icon.gif">
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

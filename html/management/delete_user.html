@@ -3,19 +3,19 @@
 	<head>
 		<meta charset="utf-8">
 		
-		<link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/2/zendesk_garden.css" type="text/css">
+		<link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/1/zendesk_garden.css" type="text/css">
 		<link rel="stylesheet" href="../../styles/ADManagerStyle.css" type="text/css">
+		<link rel="stylesheet" href="../../styles/admp-styles.css" type="text/css">
 		
 		<script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+		<script type="text/javascript" src="../../js/admp-utils.js"></script>
 		<script type="text/javascript" src="../../js/ADManagerErrorHandler.js"></script>
-		<script type="text/javascript" src="../../js/ADManagerCommonUtil.js"></script>
-		<script type="text/javascript" src="../../js/ADManagerConfiguration.js"></script>
-		
 	</head>
 	<body>
+		<div id="admp_mgmt_modal_status_message"></div>
 		<div id="statusDiv">
 			<div class="popup-success accord" style="display:none;">
 				<p class="f-left"><span></span></p>
@@ -26,33 +26,26 @@
 				<div class="f-right close-icon comm-icon" onclick="hideStatusDiv(this)"></div>
 			</div>
 		</div>
-		
 		<div class="popup-header">
 			<div id="header">
 				<div class="config_header">Delete User</div>
 			</div>
 		</div>
-		
-		<div id="content" class="popup-content">
-		</div>
-		
-		
-		</div>
+		<div id="content" class="popup-content"></div>
 		<div id="footer" class="popup-footer">
 			<div class="popup-buttons">
 				<input type="button" value="Delete" class="btn-green admp-update-button" onClick=validateAndPost()>	
 				<input type="button" value="Cancel" class="btn-gray admp-update-button" onClick=cancel()>
 			</div>
 		</div>
-		<div class="popup-loading" id="popup_loading"><img class="loading_icon" src="../../images/loading-icon.gif">
-		</div>
+		<div class="popup-loading" id="popup_loading"><img class="loading_icon" src="../../images/loading-icon.gif"></div>
 		<div id="admp-modal"></div>
 		<input type="hidden" id="actionId" name="actionId" value="2"/>
 	</body>
 	<script>
-		$("#content").load('../component/popup/popup_content.html', function(){
+		$("#content").load('../component/popup/popup_content.html', function() {
 			var commonScripts = document.createElement("script");
-			commonScripts.src = "../../js/ADManagerUserMgmtScripts.js";
+			commonScripts.src = "../../js/admp-user-mgmt.js";
 			document.getElementsByTagName("body")[0].appendChild(commonScripts);	
 		});
 	</script>
