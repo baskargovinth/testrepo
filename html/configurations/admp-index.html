@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ADManager Plus</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The following jsDelivr combine endpoint is used to load all of the Garden npm package
+        CSS required by the demo. Additional components may be added by updating the link URL.
+        See https://www.jsdelivr.com/features#combine for details. -->
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/@zendeskgarden/css-bedrock,npm/@zendeskgarden/css-buttons,npm/@zendeskgarden/css-forms,npm/@zendeskgarden/css-utilities,npm/@zendeskgarden/css-modals" type="text/css">
+        <link rel="stylesheet" href="https://webfonts.zoho.com/css?family=Open+Sans:300,400,600,700,800" >
+        <link rel="stylesheet" href="../../styles/admp-styles.css" type="text/css">
+        <link rel="stylesheet" href="../../styles/ADManagerStyle.css" type="text/css">
+
+        <!-- https://github.com/zendesk/zendesk_app_framework_sdk -->
+        <script src="https://static.zdassets.com/zendesk_app_framework_sdk/2.0/zaf_sdk.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="../../js/admp-utils.js"></script>
+        <script src="../../js/admp-index.js"></script>
+        
+    </head>
+    <body>
+        <div class="overlay"><img class="loading-gif" src="../../images/admp-loading.gif"/></div>
+        <div id="admp_landing_page_status_message"></div>
+        <div id="admp_configuration_status_message"></div>
+        <div id="admp-modal"></div><!-- Confirm and Alert Message Box -- will be loaded dynamically ---->
+        <div id="admp_not_authorized" class="admp-not-authorized" style="display:none;">
+            <img src="../../images/admp-not_authorized.png"/>
+            <h2>You are not authorized to perform this operation. Please contact your system administrator.</h2>
+        </div>
+        <div id="landing_page" class="admp-integrate-container with-padding" style="display:none;">
+            <div class="fd-integration-base">
+                <div class="extend-jira-cpb">
+                    <h2>
+                        Collaborative identity and access management with <b>Zendesk</b> and ManageEngine <b>ADManager Plus</b>
+                        <hr>
+                    </h2>
+                    <div class="ex-jira-cmpr">
+                        <img src="../../images/admp-zd-integration.png"/>
+                    </div>
+                    <div class="ex-jira-cmpr-footer">
+                        <button class="btn btn-red btn-classic"  onclick="mapAction('downloadAdmp');">
+                            <i class="fd-sprite icn-download"></i>Download ADManager Plus
+                        </button>
+                        <button class="btn btn-default btn-classic" id="integrate_now" onclick="showServerSettingsPage(event);">
+                            Integrate Now! <span class="popover__wrapper"><i class="fd-sprite icn-help-sm popover__title"></i>
+                            <div class="popover__content">
+                                <div class="popover__header">
+                                    <strong>Integration Steps </strong>
+                                    <ul>
+                                        <!-- <li><a target="_blank" href="">Benefits</a></li> -->
+                                        <li><a target="_blank" href="https://www.manageengine.com/products/ad-manager/help/admin-settings/third-party-integrations/zendesk-settings.html?utm_source=zendesk">Help</a></li>
+                                    </ul>
+                                </div>
+                                <div class="popover__body">
+                                    <ol>
+                                        <li>Enter the URL to access ADManager Plus</li>
+                                        <li>Enter the admin credentials, and domain name.</li>
+                                    </ol>
+                                </div>
+                            </div>   
+                        </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="server_settings_page" class="admp-main-container" style="display:none;">
+            <div class="admp-integrate-container with-border">
+                <div class="starterkit-rhs">
+                    <div class="urlbox-cont">
+                        <h3>Server Settings</h3>
+                        <div class="form-group clearfix">
+                            <label for="" class="control-label">ADManager Plus URL</label>
+                            <input type="text" class="text-control" onkeyup="enterKeyEventListeners(event)" placeholder="https://admp:8080" id="server_settings_url" autocomplete="off">
+                            <div class="tooltip-par">
+                                <i class="fd-sprite icn-help-lg"></i>
+                                <div class="tool-tip bottom" style="left: -95px;top: 22px;">
+                                    <div class="tooltip-arrow"></div>
+                                    <div class="tooltip-inner" style="width: 220px;">Here, the hostname refers to the DNS name of the machine where ADManager Plus is running.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label for="" class="control-label"></label>
+                            <div class="apply-btns">
+                                <button class="btn btn-classic btn-default" onclick="mapAction('showLandingPage')">Back</button>
+                                <button class="btn btn-classic btn-blue" onclick="connectToAdmpUrl()">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="urlbox-info">
+                        <span class="fd-sprite icn-info-lg"></span> Issue with Integration? Contact: <a href="mailto:support@admanagerplus.com">support@admanagerplus.com</a>
+                        <a target="_blank" href="https://www.manageengine.com/products/ad-manager/support.html?utm_source=zendesk" class="learn-more">Learn more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="admp_admin_credentials_page" class="admp-main-container" style="display:none;">
+            <div class="admp-integrate-container with-border">
+                <div class="starterkit-rhs">
+                    <div class="urlbox-cont">
+                        <h3>ADManager Plus Admin Credentials</h3>
+                        <div class="form-group clearfix">
+                            <label for="" class="control-label">Username<span class="red-asterik"> *</span></label>
+                            <input type="text" class="text-control" onkeyup="enterKeyEventListeners(event)" id="admp_admin_credentials_username" autocomplete="off">
+                        </div>
+                        <div class="form-group clearfix">
+                            <label for="" class="control-label">Password<span class="red-asterik"> *</span></label>
+                            <input type="password" class="text-control" onkeyup="enterKeyEventListeners(event)" id="admp_admin_credentials_password" autocomplete="off">
+                        </div>
+                        <div class="form-group clearfix">
+                            <label for="" class="control-label">Domain</label>
+                            <div class="custom-select admp-admin-credentials-domain">
+                                <select id="admp_admin_credentials_domain"></select>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label for="" class="control-label"></label>
+                            <div class="apply-btns">
+                                <button class="btn btn-classic btn-default" onclick="mapAction('showServerSettingsPage')">Back</button>
+                                <button class="btn btn-classic btn-blue" id="finish_button" onclick="getAdmpAdminAuthtoken()">Finish</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="admp_configuration_page" style="display:none;">
+            <header>
+                <ul class="admp-navbar">
+                    <li id="admp_configuration_tab">Configuration</li>
+                    <li id="admp_associate_users_tab">Associate Users</li>
+                    <li id="admp_support_tab">Support</li>
+                </ul>
+            </header>
+            <div id="admp_load_container"></div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,92 @@
+<!-- $Id: popup_content.html baskar.govindan Exp$-->
+
+<!--
+  -- This page contains all the required components in popup for all AD mgmt actions.
+  -- Delete User, Disable User, Enable User, Unlock User, Reset User Password
+  -->	 
+<div class="popup-form-group">
+	<label class="popup-control-label">
+		Select Domain
+	</label>
+	<div class="admp-dropdown-container">
+		<label> --- Select Domain ---</label> <!-- Selected Domain -->
+		<div class="admp-inputgroup-addon" id="domainSelBtn"><!-- Domain DropDown Icon-->
+			<i class="comm-icon admp-dropicon"></i>
+		</div>
+		<div class="admp-dropdown-box" id="domainList" style="display: none;"></div><!-- DomainList will be added dynamically once after the configuration done -->
+	</div>
+</div>
+<div class="popup-form-group">
+	<label class="popup-control-label">
+		Enter/Search User
+	</label>
+	<div class="admp-input-box">
+			<input type="text" class="admp-textinput admp-textinput-240" placeholder="" id="userName"><!-- search box-->
+			<div class="admp-inputgroup-addon admp-plusbox" id="plusIcon"><i class="comm-icon admp-search-black" ></i></div>
+	</div>
+	<div class="admp-dropdown-big" id="usersList" style="display: none;"><!-- users list will be loaded after entering search text-->
+		<div class="admp-toptool-box">
+			<div class="admp-searchbox">
+				<i class="comm-icon admp-popup-searchicon"></i>
+				<input type="text" class="admp-textinput" placeholder="" id="popup_input_box">
+			</div>
+			<div class="admp-selectedbox">
+				<span class="admp-bluetext"></span>&nbsp;&nbsp;<span>&nbsp;</span>
+			</div>
+			<ul class="admp-pagination">
+				<li class="admp-prev-box admp-pagi-disable"><a href="#"><i class="comm-icon comm-icon-prev"></i></a></li>
+				<li class="pagitext"><span id="startIndex">0</span><span>-</span><span id="endIndex">0</span><span> of </span><span id="count">0</span><span></span></li>
+				<li class="admp-prev-box"><a href="#"><i class="comm-icon comm-icon-next"></i></a></li>
+				<li class="admp-tableclose-box"><a href="#"><i class="comm-icon admp-table-close"></i></a></li>
+			</ul>
+		</div>
+		<div class="admp-tablebox">
+			<table class="admp-table" border="0" cellpadding="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th class="">&nbsp;</th>
+						<th class="">Display Name</th>
+						<th class="">SAM Account Name</th>
+						<th class="">Logon Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+		</div>
+	</div> 
+	<div id="resetPwd" style="display:none"><!-- Reset password section -- will be displayed only for Reset Password action-->
+		<div class="popup-form-group">
+			<label class="popup-control-label">
+				Password
+			</label>
+			<div class="admp-input-box">
+				<input type="password" id="password" class="admp-textinput" placeholder="">
+			</div>
+			<div class="admp-credentials-error" id="passError"><!-- Password Error Msg -->
+				<label><label>
+			</div>
+		</div>
+		<div class="popup-form-group">
+			<label class="popup-control-label">
+				Confirm Password
+			</label>
+			<div class="admp-input-box">
+				<input type="password" id="conf_password" class="admp-textinput" placeholder="">
+			</div>
+			<div class="admp-credentials-error" id="conf_pass_error"><!-- Confirm Pass Error Msg ---->
+				<label><label>
+			</div>
+		</div>
+		<div class="popup-form-group"><!-- User must change password section ---->
+			<label class="popup-control-label">
+				&nbsp
+			</label>
+			<i class="comm-icon checkbox-icon" style="margin:7px" id="mustChangePass"></i>
+			<span style="color: #000;  line-height: 30px;  font-size: 12px;">User must change password on next logon</span>
+		</div>
+		
+	</div>
+	<div id="overlay" class="popup-overlay"></div><!-- Overlay to disable input fields while connecting ---->
+</div>

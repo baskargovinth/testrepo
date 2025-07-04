@@ -1,0 +1,80 @@
+<!-- $Id: index.html baskar.govindan Exp$-->
+<!--
+  --  Index file -- LHS nav bar -- ADManager Plus configurations.
+  -->
+<html>
+	<head>
+		<meta charset="utf-8">
+		
+		<link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/1/zendesk_garden.css" type="text/css"><!-- Zendesk core stylesheet ---->
+		<link rel="stylesheet" href="../../styles/ADManagerStyle.css" type="text/css"><!-- ADManager Plus applicatiion stylesheet ---->
+		
+		<script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+		<script type="text/javascript" src="../../js/ADManagerErrorHandler.js"></script>
+		<script type="text/javascript" src="../../js/ADManagerCommonUtil.js"></script>
+		<script type="text/javascript" src="../../js/ADManagerConfiguration.js"></script>
+	</head>
+	<body>
+		<div id="topNavigation" class="topNav">
+			<span onclick="openConfigPage();" class="active" id="setUpPage" style="cursor:pointer;margin-left:60px;">Setup</span>
+			<span onclick="openADMPIframe();" id="openADMPIframe" style="cursor:pointer;display:none;">ADManager Plus</span>
+			<span onclick="openSupportPage();" id="openSupportPage" style="cursor:pointer;float:right;margin-right:10px;" class="blueColor"><i class="comm-icon support-icon"></i>Support</span>
+		</div>
+		<div id="dashboard_view_container"></div>
+		<div id="admanager_view_container" style="display:none;"></div>
+		<script>
+			//Getting configured ADManager Plus server details from metadata.	
+			var client = ZAFClient.init();
+			var openConfigPage = function(){
+			
+				$("#setUpPage").addClass("active");
+				$("#openADMPIframe").removeClass("active");
+				$("#dashboard_view_container").show(); 
+				$("#admanager_view_container").hide();
+				if(ADManagerCommonUtil.config_status == 'NEED_REFRESH')
+				{
+					ADManagerCommonUtil.config_status = '';
+					return;
+				}
+				client.metadata().then(function(metadata) {
+					var admanagerServerUrl = metadata.settings.admanagerServerUrl;
+					var authToken = metadata.settings.admanagerAuthToken;
+					var	forward = './serverDetails.hdbs';
+
+					if(admanagerServerUrl == '' || admanagerServerUrl == undefined || authToken == '' || authToken == undefined)
+					{
+						//If ADManager Plus server is not configured, Then need to show the configuration page.
+						forward = './setup.hdbs';
+					}
+					else
+					{
+						// To show ADManager Plus tab, If ADManager Plus server is already configured.
+						$("#openADMPIframe").show();
+					}
+					$.ajax(forward).done(function(data) {
+						//To load required page. 
+						var template = Handlebars.compile(data);
+						$("#dashboard_view_container").empty().html(template(data));
+					});
+				});
+			}
+			$("body").click(function(event){
+				var $target = $(event.target);
+				if($target.parent().is(".admp-inputgroup-addon") || $target.is(".admp-inputgroup-addon") || $target.parent().is(".admp-dropdown-container") || $target.is(".admp-dropdown-container")){//NO I18N
+					var visibility = $target.closest('.admp-dropdown-container').find(".admp-dropdown-box").css('display');
+					$(".admp-dropdown-box").hide();
+					if(visibility == "none")
+						$target.closest('.admp-dropdown-container').find(".admp-dropdown-box").show();
+					else
+						$target.closest('.admp-dropdown-container').find(".admp-dropdown-box").hide();
+				}
+				else
+					$(".admp-dropdown-box").hide();
+			});
+			openConfigPage();
+		</script>
+	</body>
+</html>

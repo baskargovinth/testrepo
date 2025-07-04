@@ -1,0 +1,160 @@
+<!-- $Id: index.html baskar.govindan Exp$-->
+<html>
+	<head>
+		<meta charset="utf-8">
+		
+		<link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/1/zendesk_garden.css" type="text/css">
+		<link rel="stylesheet" href="../../styles/ADManagerStyle.css" type="text/css">
+		<link rel="stylesheet" href="../../styles/admp-styles.css" type="text/css">
+		
+		<script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+		<script type="text/javascript" src="../../js/admp-utils.js"></script>
+		<script type="text/javascript" src="../../js/ADManagerErrorHandler.js"></script>
+		<script type="text/javascript" src="../../js/admp-create-user.js"></script>
+	</head>
+	<body>
+		<div id="admp_mgmt_modal_status_message"></div>
+		<div id="statusDiv">
+			<div class="popup-success accord" style="display:none;">
+				<p class="f-left"><span></span></p>
+				<div class="f-right close-icon comm-icon" onclick="hideStatusDiv(this)"></div>
+			</div>
+			<div class="popup-error accord" style="display:none;">
+				<p class="f-left"><span></span></p>
+				<div class="f-right close-icon comm-icon" onclick="hideStatusDiv(this)"></div>
+			</div>
+		</div>
+		<div class="popup-header">
+			<div id="header">
+				<div class="config_header">Create User</div>
+			</div>
+		</div>
+		<div id="content" class="popup-content">
+			<div class="popup-form-group">
+				<label class="popup-control-label">
+					Select Domain
+				</label>
+				<div class="admp-dropdown-container">
+					<label> --- Select Domain ---</label>
+					<div class="admp-inputgroup-addon" id="domainSelBtn">
+						<i class="comm-icon admp-dropicon"></i>
+					</div>
+					<div class="admp-dropdown-box" id="domainList" style="display: none;"></div>
+				</div>
+			</div>
+			<div class="popup-form-group">
+				<label class="popup-control-label" >
+					Select Template
+				</label>
+				<div class="admp-dropdown-container">
+					<label> --- Select Template --- </label>
+					<input type="hidden" id="selectedTemplate" name="template" value="--"/>
+					<div class="admp-inputgroup-addon" id="templateSelBtn">
+						<i class="comm-icon admp-dropicon"></i>
+					</div>
+					<div class="admp-dropdown-box" id="templateList" style="display: none;"></div>
+				</div>
+			</div>
+			<div class="popup-form-group">
+				<label class="popup-control-label">
+					First Name
+				</label>
+				<div class="admp-input-box">
+					<input type="text" id="firstName" class="admp-textinput" placeholder="">
+				</div>
+				<div class="admp-credentials-error" id="firstNameError">
+					<label></label>
+				</div>
+			</div>
+			<div class="popup-form-group">
+				<label class="popup-control-label">
+					Last Name
+				</label>
+				<div class="admp-input-box">
+					<input type="text" id="lastName" class="admp-textinput" placeholder="">
+				</div>
+				<div class="admp-credentials-error" id="lastNameError">
+					<label><label>
+				</div>
+			</div>
+			<div class="popup-form-group">
+				<label class="popup-control-label">
+					Password
+				</label>
+				<div class="admp-input-box">
+					<input type="password" id="password" class="admp-textinput" placeholder="">
+				</div>
+				<div class="admp-credentials-error" id="passwordError">
+					<label><label>
+				</div>
+			</div>
+			<div class="popup-form-group">
+				<label class="popup-control-label">
+					Employee ID
+				</label>
+				<div class="admp-input-box">
+					<input type="text" id="empId" class="admp-textinput" placeholder="">
+					</div>
+				<div class="admp-credentials-error" id="empIdError">
+					<label><label>
+				</div>
+			</div>
+			<div class="popup-form-group">
+				<label class="popup-control-label">
+					Department
+				</label>
+				<div class="admp-input-box">
+					<input type="text" id="department" class="admp-textinput" placeholder="">
+				</div>
+				<div class="admp-credentials-error" id="departmentError">
+					<label><label>
+				</div>
+					</div>
+			<div class="popup-form-group">
+				<label class="popup-control-label">
+					Title
+				</label>
+				<div class="admp-input-box">
+					<input type="text" id="title" class="admp-textinput" placeholder="">
+				</div>
+				<div class="admp-credentials-error" id="titleError">
+					<label><label>
+				</div>
+			</div>
+			<div class="popup-form-group">
+				<label class="popup-control-label">
+					Mobile Number	
+				</label>
+				<div class="admp-input-box">
+					<input type="text" id="mobileNumber" class="admp-textinput" placeholder="">
+				</div>
+				<div class="admp-credentials-error" id="mobileNumberError">
+					<label><label>
+				</div>
+			</div>
+			<div class="popup-form-group">
+				<label class="popup-control-label">
+					Telephone Number
+				</label>
+				<div class="admp-input-box">
+					<input type="text" id="telephoneNumber" class="admp-textinput" placeholder="">
+				</div>
+				<div class="admp-credentials-error" id="telephoneNumberError">
+					<label><label>
+				</div>
+					</div>
+			<div id="overlay" class="popup-overlay"></div>
+		</div>
+		<div id="footer" class="popup-footer">
+			<div class="popup-buttons">
+				<input type="button" value="Create" class="btn-green admp-update-button" onClick=createUser()>
+				<input type="button" value="Cancel" class="btn-gray admp-update-button" onClick=cancel()>
+			</div>
+		</div>
+		<div class="popup-loading" id="popup_loading"><img class="loading_icon" src="../../images/loading-icon.gif"></div>
+		<div id="admp-modal"></div>
+	</body>
+</html>

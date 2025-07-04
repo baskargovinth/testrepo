@@ -1,0 +1,84 @@
+<html>
+<head>
+	<link rel="stylesheet" href="https://assets.zendesk.com/apps/sdk-assets/css/2/zendesk_garden.css" type="text/css">
+  
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../../js/ADManagerCommonUtil.js"></script>
+	<script type="text/javascript" src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.js"></script>
+  <link rel="stylesheet" href="../../styles/ADManagerStyle.css" type="text/css">
+</head>
+<body>
+	<div class="mgmt-icon-div">
+			<img class="mgmt-icon" src="../../images/CreateUser.png">
+			<span class="edit bluecolor pointer" onclick="openModal('1');">Create User</span>
+	</div>
+	<div class="mgmt-icon-div">
+			<img class="mgmt-icon" src="../../images/DeleteUser.png">
+			<span class="edit bluecolor pointer" onclick="openModal('2');">Delete User</span>
+	</div>
+	<div class="mgmt-icon-div">
+			<img class="mgmt-icon" src="../../images/DisableUser.png">
+			<span class="edit bluecolor pointer" onclick="openModal('3');">Disable User</span>
+	</div>
+	<div class="mgmt-icon-div">
+			<img class="mgmt-icon" src="../../images/EnableUser.png">
+			<span class="edit bluecolor pointer" onclick="openModal('4');">Enable User</span>
+	</div>
+	<div class="mgmt-icon-div">
+			<img class="mgmt-icon" src="../../images/ResetUser.png">
+			<span class="edit bluecolor pointer" onclick="openModal('5');">Reset User Password</span>
+	</div>
+	<div class="mgmt-icon-div">
+			<img class="mgmt-icon" src="../../images/UnlockUser.png">
+			<span class="edit bluecolor pointer" onclick="openModal('6');">Unlock User</span>
+	</div>
+  <script>
+	var client = ZAFClient.init();
+		
+	function openModal(id) {
+		client.get('ticket.id').then(function(data) {
+			var ticket_id = data["ticket.id"];
+			var url = "";
+			switch(parseInt(id))
+			{
+				case 1:
+						url = 'assets/html/management/create_user.html';
+						break;
+				case 2:
+						url = 'assets/html/management/delete_user.html';
+						break;
+				case 3:
+						url = 'assets/html/management/disable_user.html';
+						break;
+				case 4:
+						url = 'assets/html/management/enable_user.html';
+						break;
+				case 5:
+						url = 'assets/html/management/reset_password.html';
+						break;
+				case 6:
+						url = 'assets/html/management/unlock_user.html';
+						break;
+				case 7:
+						url = 'assets/html/management/add_to_group.html';
+						break;
+				case 8:
+						url = 'assets/html/management/Remove_from_group.html';
+						break;
+			}
+			return client.invoke('instances.create', {
+			  location: 'modal',
+			  url: url+'?ticket_id='+ticket_id
+			}).then(function(data) {
+				var instanceGuid = data['instances.create'][0].instanceGuid;
+				var modalClient = client.instance(instanceGuid);
+				modalClient.invoke('resize', { width: '900px', height: '350px'});
+			});
+		
+		});
+	}
+
+  </script>
+</body>
+</html>
